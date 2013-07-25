@@ -1,7 +1,7 @@
 
-class TshirtsController < ApplicationController
+class PhasersController < ApplicationController
 
-  def buy_tshirt
+  def buy_phaser
     @credit_card = CreditCard.new
   end
 
@@ -10,13 +10,13 @@ class TshirtsController < ApplicationController
 
     @payment_method_token = params[:token]
     @credit_card = CreditCard.new(SpreedlyCore.get_payment_method(@payment_method_token))
-    return render(:action => :buy_tshirt) unless @credit_card.valid?
+    return render(:action => :buy_phaser) unless @credit_card.valid?
 
     response = SpreedlyCore.purchase(params[:token], (( 0.02 * @credit_card.how_many.to_i ) * 100).to_i )
     return redirect_to(successful_purchase_url) if response.code == 200
 
     set_flash_error(response)
-    render(:action => :buy_tshirt)
+    render(:action => :buy_phaser)
   end
 
   def successful_purchase
@@ -38,7 +38,7 @@ class TshirtsController < ApplicationController
 
     @credit_card = CreditCard.new
     flash.now[:error] = params[:error]
-    render(:action => :buy_tshirt)
+    render(:action => :buy_phaser)
     true
   end
 
