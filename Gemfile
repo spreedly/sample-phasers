@@ -8,8 +8,12 @@ gem "colored"
 gem "nokogiri"
 gem "dynamic_form"
 gem 'bootstrap-sass'
-gem 'log_buddy'
 gem 'pg'
+
+group :test, :development do
+  gem 'log_buddy'
+  gem 'awesome_print'
+end
 
 group :assets do
   gem "sass-rails"
