@@ -8,15 +8,16 @@ class PhasersController < ApplicationController
   def transparent_redirect_complete
     return if error_saving_card
 
-    @payment_method_token = params[:token]
-    @credit_card = CreditCard.new(SpreedlyCore.get_payment_method(@payment_method_token))
-    return render(:action => :buy_phaser) unless @credit_card.valid?
+    response = SpreedlyCore.get_payment_method(params[:token])
+    return render_unable_to_retieve_card(response) unless response.code == 200
 
-    response = SpreedlyCore.purchase(params[:token], (( 0.02 * @credit_card.how_many.to_i ) * 100).to_i )
+    @credit_card = CreditCard.new(response)
+    return render_buy_phaser unless @credit_card.valid?
+
+    response = SpreedlyCore.purchase(params[:token], amount_to_charge )
     return redirect_to(successful_purchase_url) if response.code == 200
 
-    set_flash_error(response)
-    render(:action => :buy_phaser)
+    render_unable_to_purchase(response)
   end
 
   def successful_purchase
@@ -25,21 +26,33 @@ class PhasersController < ApplicationController
 
 
   private
-  def set_flash_error(response)
-    if response["errors"]
-      flash.now[:error] = response["errors"]["error"]["__content__"]
-    else
-      flash.now[:error] = "#{response['transaction']['response']['message']} #{response['transaction']['response']['error_detail']}"
-    end
+  def render_unable_to_retieve_card(response)
+    flash.now[:error] = response["errors"]["error"]["__content__"]
+    render_buy_phaser
+  end
+
+  def render_unable_to_purchase(response)
+    return render_unable_to_retieve_card(response) if response["errors"]
+    flash.now[:error] = "#{response['transaction']['response']['message']} #{response['transaction']['response']['error_detail']}"
+
+    render_buy_phaser
   end
 
   def error_saving_card
     return false if params[:error].blank?
 
-    @credit_card = CreditCard.new
     flash.now[:error] = params[:error]
-    render(:action => :buy_phaser)
+    render_buy_phaser
     true
+  end
+
+  def render_buy_phaser
+    @credit_card = CreditCard.new unless @credit_card
+    render(:action => :buy_phaser)
+  end
+
+  def amount_to_charge
+    (( 0.02 * @credit_card.how_many.to_i ) * 100).to_i
   end
 
 end
