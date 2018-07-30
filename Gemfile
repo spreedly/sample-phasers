@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 ruby "2.3.6"
-gem 'rails', '~> 4.0.0'
+gem 'rails', '~> 4.1.0'
 gem "jquery-rails"
 gem "httparty"
 gem "colored"
