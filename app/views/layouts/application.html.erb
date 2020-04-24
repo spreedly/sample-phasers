@@ -9,11 +9,11 @@
     <%= stylesheet_link_tag 'application' %>
   </head>
   <body>
-    <header class="navbar navbar-fixed-top">
-      <nav class="navbar-inner">
+    <header class="navbar navbar-fixed-top navbar-default">
+      <nav class="container">
         <div class="container">
-          <a href="/" class="brand">Home</a>
-          <ul class="nav">
+          <div class="navbar-header"><a href="/" class="navbar-brand">Home</a></div>
+          <ul class="nav navbar-nav">
             <li>
               <%= link_to "Buy Phasers", buy_phaser_url %>
             </li>
@@ -30,9 +30,8 @@
       <hr/>
       <footer>
         <p>
-          <img src="//id.spreedly.com/assets/pages/documentation/phaser-store.png" width="55">
           <small>
-            © 2013 <%= link_to "Spreedly", "https://spreedly.com" %> Corporation.  All rights reserved.
+            © 2013 - 2020 <%= link_to "Spreedly", "https://spreedly.com" %> Corporation.  All rights reserved.
           </small>
         </p>
       </footer>
