@@ -4,6 +4,8 @@ require dotenv if File.exist?(dotenv)
 
 ENV["RAILS_ENV"] ||= "development"
 
+ENV['RAILS_SERVE_STATIC_FILES'] = '1'
+
 ENV["DATABASE_ADAPTER"] ||= "postgresql"
 ENV["DATABASE_NAME"] ||= "spreedly_phasers"
 ENV["DATABASE_TEST_NAME"] ||= "spreedly_phasers_test"
@@ -16,7 +18,3 @@ ENV["CORE_ACCESS_SECRET"] ||= "MIMo7gJrSi3LnJGdRrOZeBBowXmDVE4zEgyHQS91tIqZiJ2oi
 ENV["CORE_DOMAIN"] ||=  "https://core.spreedly.com"
 
 ENV["CORE_GATEWAY_FOR_CREDIT_CARD"] ||=  "StuXzUJ5Khe3Wes31T0M4uNnjv9"
-
-
-
-

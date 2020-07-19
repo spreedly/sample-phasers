@@ -16,6 +16,7 @@ gem 'uglifier'
 gem 'activeresource'
 
 group :test, :development do
+  gem 'listen'
   gem 'log_buddy'
   gem 'awesome_print'
 end
