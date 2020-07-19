@@ -28,6 +28,10 @@ module PhasersSample
     config.encoding = "utf-8"
     config.autoload_paths += %W(#{config.root}/lib)
 
+    if ENV['APP_HOST']
+      config.hosts << ENV['APP_HOST']
+    end
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
