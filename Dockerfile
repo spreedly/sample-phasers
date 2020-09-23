@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:experimental
-FROM ruby:2.6.3
+FROM ruby:2.6.6
 LABEL maintainer="ops@spreedly.com"
 
 ENV NODE_VERSION=8.x
@@ -25,7 +25,7 @@ COPY Gemfile /srv/phasers/Gemfile
 COPY Gemfile.lock /srv/phasers/Gemfile.lock
 COPY vendor/ /srv/phasers/vendor
 RUN gem install bundler
-RUN bundle install --local --path vendor/bundle
+RUN bundle install --local
 COPY ./ /srv/phasers
 
 EXPOSE 3000/tcp
